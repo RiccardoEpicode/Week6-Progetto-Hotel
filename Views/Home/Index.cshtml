@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Hotel Reservation System</h1>
+    <p class="lead mt-2">Gestione clienti, camere e prenotazioni</p>
+
+    <hr />
+
+    <a class="btn btn-primary me-3" href="/Cliente">Clienti</a>
+    <a class="btn btn-secondary me-3" href="/Camera">Camere</a>
+    <a class="btn btn-success me-3" href="/Prenotazione">Prenotazioni</a>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <a class="btn btn-danger" href="/Admin/Dashboard">Area Admin</a>
+    }
+</div>

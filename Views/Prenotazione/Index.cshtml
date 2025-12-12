@@ -1,0 +1,49 @@
+﻿@model IEnumerable<HotelReservationApp.Models.Entities.Prenotazione>
+
+<h1>Prenotazioni</h1>
+
+@if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+{
+    <text>
+        <a class="btn btn-primary mb-3" href="/Prenotazione/Create">
+            Nuova Prenotazione
+        </a>
+    </text>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Camera</th>
+            <th>Dal</th>
+            <th>Al</th>
+            <th>Stato</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.Cliente.Nome @p.Cliente.Cognome</td>
+                <td>@p.Camera.Numero</td>
+                <td>@p.DataInizio.ToShortDateString()</td>
+                <td>@p.DataFine.ToShortDateString()</td>
+                <td>@p.Stato</td>
+
+                <td>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
+                        <text>
+                            <a href="/Prenotazione/Edit/@p.PrenotazioneId">Modifica</a>
+                            |
+                            <a href="/Prenotazione/Delete/@p.PrenotazioneId">Cancella</a>
+                        </text>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

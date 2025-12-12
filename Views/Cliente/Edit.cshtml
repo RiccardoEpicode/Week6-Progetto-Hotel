@@ -1,0 +1,12 @@
+﻿<h2>Modifica Cliente</h2>
+
+<form method="post">
+    <input name="ClienteId" type="hidden" value="@Model.ClienteId" />
+
+    <input name="Nome" class="form-control" value="@Model.Nome" required />
+    <input name="Cognome" class="form-control mt-2" value="@Model.Cognome" required />
+    <input name="Email" class="form-control mt-2" value="@Model.Email" />
+    <input name="Telefono" class="form-control mt-2" value="@Model.Telefono" />
+
+    <button class="btn btn-success mt-3">Aggiorna</button>
+</form>

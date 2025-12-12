@@ -1,0 +1,25 @@
+﻿<h1>Camere</h1>
+
+<a class="btn btn-primary mb-3" href="/Camera/Create">Nuova Camera</a>
+
+<table class="table">
+    <tr>
+        <th>Numero</th>
+        <th>Tipo</th>
+        <th>Prezzo</th>
+        <th></th>
+    </tr>
+
+    @foreach (var c in Model)
+    {
+        <tr>
+            <td>@c.Numero</td>
+            <td>@c.Tipo</td>
+            <td>@c.Prezzo €</td>
+            <td>
+                <a href="/Camera/Edit/@c.CameraId">Modifica</a> |
+                <a href="/Camera/Delete/@c.CameraId">Cancella</a>
+            </td>
+        </tr>
+    }
+</table>
