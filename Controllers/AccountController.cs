@@ -1,74 +1,72 @@
-﻿using HotelReservationApp.Models;
+﻿using Booking.com.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+using Booking.com.Models.Entities;
 
-namespace HotelReservationApp.Controllers
+public class AccountController : Controller
 {
-    public class AccountController : Controller
+    private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly IUserService _userService;
+
+    public AccountController(
+        SignInManager<ApplicationUser> signInManager,
+        IUserService userService)
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly RoleManager<ApplicationRole> _roleManager;
+        _signInManager = signInManager;
+        _userService = userService;
+    }
 
-        public AccountController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
-            RoleManager<ApplicationRole> roleManager)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _roleManager = roleManager;
-        }
+    // -------- LOGIN --------
+    [HttpGet]
+    public IActionResult Login(string? returnUrl = null)
+    {
+        ViewData["ReturnUrl"] = returnUrl;
+        return View();
+    }
 
-        [HttpGet]
-        public IActionResult Login() => View();
+    [HttpPost]
+    public async Task<IActionResult> Login(
+        string email,
+        string password,
+        string? returnUrl = null)
+    {
+        var result = await _signInManager.PasswordSignInAsync(
+            email, password, false, false);
 
-        [HttpPost]
-        public async Task<IActionResult> Login(string email, string password)
-        {
-            var result = await _signInManager.PasswordSignInAsync(email, password, false, false);
+        if (result.Succeeded)
+            return Redirect(returnUrl ?? "/");
 
-            if (result.Succeeded)
-                return RedirectToAction("Index", "Home");
+        ModelState.AddModelError("", "Credenziali errate");
+        return View();
+    }
 
-            ModelState.AddModelError("", "Credenziali errate.");
-            return View();
-        }
+    // -------- REGISTER --------
+    [HttpGet]
+    public IActionResult Register()
+    {
+        return View();
+    }
 
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Login");
-        }
+    [HttpPost]
+    public async Task<IActionResult> Register(
+        string email,
+        string password,
+        string firstName,
+        string lastName,
+        string phoneNumber)
+    {
+        await _userService.RegisterUserAsync(
+            email, password, firstName, lastName, phoneNumber);
 
-        [Authorize(Roles = "Admin")]
-        public IActionResult Register()
-        {
-            ViewBag.Roles = new[] { "Admin", "Manager", "Viewer" };
-            return View();
-        }
+        await _signInManager.PasswordSignInAsync(
+            email, password, false, false);
 
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async Task<IActionResult> Register(string email, string password, string role)
-        {
-            var user = new ApplicationUser { UserName = email, Email = email };
+        return RedirectToAction("Index", "Home");
+    }
 
-            var result = await _userManager.CreateAsync(user, password);
-
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(user, role);
-                return RedirectToAction("Index", "Home");
-            }
-
-            foreach (var e in result.Errors)
-                ModelState.AddModelError("", e.Description);
-
-            return View();
-        }
-
-        public IActionResult AccessDenied() => View();
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
     }
 }

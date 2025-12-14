@@ -1,0 +1,112 @@
+﻿@model Booking.com.Models.Entities.Client
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="container py-5">
+    <div class="row g-4 align-items-stretch">
+
+        <!-- LEFT: PROFILE + FORM -->
+        <div class="col-md-6">
+
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body p-4">
+
+                    <h3 class="fw-bold mb-1">My profile</h3>
+                    <p class="text-muted mb-4">
+                        Your personal info
+                    </p>
+
+                    <!-- PROFILE TABLE -->
+                    <table class="table table-borderless align-middle mb-4">
+                        <tbody>
+                            <tr>
+                                <th class="text-muted w-50">First Name</th>
+                                <td class="fw-semibold">@Model.FirstName</td>
+                            </tr>
+                            <tr>
+                                <th class="text-muted">Last Name</th>
+                                <td class="fw-semibold">@Model.LastName</td>
+                            </tr>
+                            <tr>
+                                <th class="text-muted">Email</th>
+                                <td class="fw-semibold">@Model.Email</td>
+                            </tr>
+                            <tr>
+                                <th class="text-muted">Phone NUmber</th>
+                                <td class="fw-semibold">@Model.PhoneNumber</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <hr />
+
+                    <!-- SUCCESS MESSAGE -->
+                    @if (TempData["RequestSent"] != null)
+                    {
+                        <div class="alert alert-success">
+                            ✅ information update request sent.
+                        </div>
+                    }
+
+                    <!-- FAKE REQUEST FORM -->
+                    <h5 class="fw-semibold mb-3">
+                        Request information update
+                    </h5>
+
+                    <form asp-action="RequestProfileChange" method="post">
+
+                        <div class="mb-3">
+                            <label class="form-label">Your Email</label>
+                            <input name="email"
+                                   class="form-control"
+                                   value="@Model.Email"
+                                   required />
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Message</label>
+                            <textarea name="message"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="Insert here the info that you want us to change..."
+                                      required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-dark w-100">
+                            Send Request
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT: IMAGE + BRAND -->
+        <div class="col-md-6">
+
+            <div class="card shadow-sm border-0 h-100 overflow-hidden">
+                <div class="position-relative h-100">
+
+                    <img src="https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg"
+                         class="img-fluid h-100 w-100 object-fit-cover"
+                         alt="Hotel" />
+
+                    <div class="position-absolute top-0 start-0 w-100 h-100
+                                d-flex align-items-center justify-content-center
+                                bg-dark bg-opacity-50">
+                        <h1 class="text-white fw-bold display-6">
+                            Booking.com
+                        </h1>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

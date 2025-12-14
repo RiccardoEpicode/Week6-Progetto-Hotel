@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Booking.com.Models.Entities.Room>
+
+<div class="container py-5">
+
+    <h1 class="fw-bold mb-4">Available Rooms</h1>
+
+    <div class="row g-4">
+        @foreach (var room in Model)
+        {
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 h-100">
+
+                    <!-- IMAGE -->
+                    <img src="@room.ImageUrl"
+                         class="card-img-top"
+                         style="height:220px; object-fit:cover;"
+                         alt="Room image">
+
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">
+                            Room @room.RoomNumber
+                        </h5>
+
+                        <p class="mb-1">
+                            <span class="badge bg-secondary">
+                                @room.Type
+                            </span>
+                        </p>
+
+                        <p class="fw-bold fs-5 mt-2">
+                            € @room.Price.ToString("0.00") / night
+                        </p>
+                    </div>
+
+                    <div class="card-footer bg-white border-0 text-center pb-3">
+                        @if (User.Identity!.IsAuthenticated)
+                        {
+                            <a asp-controller="Reservation"
+                               asp-action="Create"
+                               asp-route-roomId="@room.RoomId"
+                               class="btn btn-primary w-75">
+                                Book now
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Account"
+                               asp-action="Login"
+                               class="btn btn-outline-primary w-75">
+                                Login to Book
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>

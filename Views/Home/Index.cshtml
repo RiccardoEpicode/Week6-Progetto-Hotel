@@ -1,19 +1,112 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Hotel Reservation System</h1>
-    <p class="lead mt-2">Gestione clienti, camere e prenotazioni</p>
+<!-- HERO SECTION -->
+<section class="bg-dark text-white py-5">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-md-6">
 
-    <hr />
+                <h1 class="display-4 fw-bold mb-3">
+                    Find your perfect stay
+                </h1>
 
-    <a class="btn btn-primary me-3" href="/Cliente">Clienti</a>
-    <a class="btn btn-secondary me-3" href="/Camera">Camere</a>
-    <a class="btn btn-success me-3" href="/Prenotazione">Prenotazioni</a>
+                <p class="lead mb-4">
+                    Book comfortable rooms, manage your reservations,
+                    and enjoy a seamless hotel experience.
+                </p>
 
-    @if (User.IsInRole("Admin"))
-    {
-        <a class="btn btn-danger" href="/Admin/Dashboard">Area Admin</a>
-    }
-</div>
+                <div class="d-flex gap-3">
+                    <a asp-controller="Room" asp-action="Index"
+                       class="btn btn-light btn-lg px-4">
+                        Browse Rooms
+                    </a>
+
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <a asp-controller="Account" asp-action="Register"
+                           class="btn btn-outline-light btn-lg px-4">
+                            Create Account
+                        </a>
+                    }
+                </div>
+
+            </div>
+
+            <div class="col-md-6 text-center">
+                <img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg"
+                     class="img-fluid rounded shadow"
+                     alt="Hotel" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Why choose Booking.com?</h2>
+            <p class="text-muted">
+                Everything you need to manage your stay, in one place.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center p-4">
+                        <h5 class="fw-bold mb-3">Easy Booking</h5>
+                        <p class="text-muted">
+                            Browse available rooms and book your stay
+                            in just a few clicks.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center p-4">
+                        <h5 class="fw-bold mb-3">Manage Reservations</h5>
+                        <p class="text-muted">
+                            Check your reservations, confirmation status,
+                            and stay details anytime.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center p-4">
+                        <h5 class="fw-bold mb-3">Personal Profile</h5>
+                        <p class="text-muted">
+                            Keep your personal information updated
+                            and request changes easily.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="bg-light py-5">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-3">
+            Ready to book your next stay?
+        </h2>
+
+        <p class="text-muted mb-4">
+            Discover available rooms and start your experience today.
+        </p>
+
+        <a asp-controller="Room" asp-action="Index"
+           class="btn btn-dark btn-lg px-5">
+            View Rooms
+        </a>
+    </div>
+</section>

@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Booking.com.Models.Entities.ApplicationUser>
+
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<div class="container py-5">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Manage Users</h2>
+            <p class="text-muted mb-0">
+                Check, modify, or delete registered users
+            </p>
+        </div>
+    </div>
+
+    <!-- TABLE CARD -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Email</th>
+                        <th>Username</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="3" class="text-center text-muted py-4">
+                                No user Found.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var u in Model)
+                        {
+                            <tr>
+                                <td>@u.Email</td>
+                                <td>@u.UserName</td>
+
+                                <td class="text-center">
+                                    @if (u.Email == "admin@hotel.com")
+                                    {
+                                        <span class="badge bg-secondary">
+                                            Admin
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <a asp-action="EditUser"
+                                               asp-route-id="@u.Id"
+                                               class="btn btn-outline-primary">
+                                                Modify
+                                            </a>
+
+                                            <!-- ELIMINA -->
+                                            <a asp-action="DeleteUser"
+                                               asp-route-id="@u.Id"
+                                               class="btn btn-outline-danger"
+                                               onclick="return confirm('Are you sure you want to permanently delete this user?');">
+                                                Delete
+                                            </a>
+                                        </div>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>

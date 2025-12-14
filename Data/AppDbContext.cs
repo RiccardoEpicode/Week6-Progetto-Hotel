@@ -1,17 +1,18 @@
-﻿using HotelReservationApp.Models;
-using HotelReservationApp.Models.Entities;
+﻿using Booking.com.Models.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace HotelReservationApp.Data
+namespace Booking.com.Data
 {
     public class AppDbContext
-        : IdentityDbContext<ApplicationUser, ApplicationRole, string>
+        : IdentityDbContext<ApplicationUser, IdentityRole, string>
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+            : base(options) { }
 
-        public DbSet<Cliente> Clienti { get; set; }
-        public DbSet<Camera> Camere { get; set; }
-        public DbSet<Prenotazione> Prenotazioni { get; set; }
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
     }
 }

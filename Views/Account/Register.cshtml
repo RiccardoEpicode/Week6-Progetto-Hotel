@@ -1,19 +1,72 @@
 ﻿@{
-    ViewBag.Title = "Register";
+    ViewData["Title"] = "Register";
 }
 
-<h2>Crea nuovo dipendente</h2>
+<section class="auth-page">
+    <div class="auth-overlay"></div>
 
-<form method="post" class="mt-4">
-    <input name="email" type="email" class="form-control" placeholder="Email" required />
-    <input name="password" type="password" class="form-control mt-2" placeholder="Password" required />
+    <div class="auth-card">
+        <div class="card shadow-lg border-0">
+            <div class="card-body p-4 p-md-5">
 
-    <select name="role" class="form-control mt-2">
-        @foreach (var r in ViewBag.Roles)
-        {
-            <option>@r</option>
-        }
-    </select>
+                <h2 class="text-center fw-bold mb-4">Create an account</h2>
 
-    <button class="btn btn-success mt-3">Crea Utente</button>
-</form>
+                <form method="post">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">First Name</label>
+                            <input class="form-control form-control-lg"
+                                   name="firstName"
+                                   required />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Last Name</label>
+                            <input class="form-control form-control-lg"
+                                   name="lastName"
+                                   required />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input class="form-control form-control-lg"
+                               name="email"
+                               type="email"
+                               required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Phone Number</label>
+                        <input class="form-control form-control-lg"
+                               name="phoneNumber"
+                               required />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Password</label>
+                        <input class="form-control form-control-lg"
+                               name="password"
+                               type="password"
+                               required />
+                    </div>
+
+                    <button class="btn btn-dark btn-lg w-100">
+                        Register
+                    </button>
+                </form>
+
+                <div class="text-center mt-3">
+                    <small>
+                        Already have account?
+                        <a asp-controller="Account"
+                           asp-action="Login">
+                            Login
+                        </a>
+                    </small>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

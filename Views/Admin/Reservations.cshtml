@@ -1,0 +1,110 @@
+﻿@model IEnumerable<Booking.com.Models.Entities.Reservation>
+
+@{
+    ViewData["Title"] = "Manage Bookings";
+}
+
+<div class="container py-5">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Manage all Bookings</h2>
+            <p class="text-muted mb-0">
+                Confirm or cancel guests bookings.
+            </p>
+        </div>
+    </div>
+
+    <!-- TABLE CARD -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Guest</th>
+                        <th>Room</th>
+                        <th>Period</th>
+                        <th>Status</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                There are no Bookings yet.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var r in Model)
+                        {
+                            <tr>
+                                <!-- CLIENTE -->
+                                <td>
+                                    <strong>
+                                        @r.Client.FirstName @r.Client.LastName
+                                    </strong>
+                                </td>
+
+                                <!-- ROOM -->
+                                <td>
+                                    @r.Room.RoomNumber - @r.Room.Type
+                                </td>
+
+                                <!-- DATE -->
+                                <td>
+                                    @r.StartDate.ToShortDateString()
+                                    →
+                                    @r.EndDate.ToShortDateString()
+                                </td>
+
+                                <!-- STATO -->
+                                <td>
+                                    @if (r.IsConfirmed)
+                                    {
+                                        <span class="badge bg-success">
+                                            Confirmed
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning text-dark">
+                                            Pending
+                                        </span>
+                                    }
+                                </td>
+
+                                <!-- AZIONI -->
+                                <td class="text-center">
+                                    @if (!r.IsConfirmed)
+                                    {
+                                        <a asp-action="ConfirmReservation"
+                                           asp-route-id="@r.ReservationId"
+                                           class="btn btn-sm btn-outline-success me-2">
+                                            Confirm
+                                        </a>
+                                    }
+
+                                    <a asp-action="DeleteReservation"
+                                       asp-route-id="@r.ReservationId"
+                                       class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('Delete reservation permanently?');">
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>

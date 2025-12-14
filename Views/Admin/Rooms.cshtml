@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Booking.com.Models.Entities.Room>
+
+@{
+    ViewData["Title"] = "Manage Rooms";
+}
+
+<div class="container py-5">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-bold">Manage Rooms</h1>
+            <p class="text-muted mb-0">Check and manage the available rooms</p>
+        </div>
+
+        <a asp-action="CreateRoom" class="btn btn-dark">
+            + New Room
+        </a>
+    </div>
+
+    <!-- TABLE -->
+    <div class="card shadow-sm border-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Number</th>
+                        <th>Type</th>
+                        <th>Price</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                There is no room.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        int i = 1;
+                        foreach (var r in Model)
+                        {
+                            <tr>
+                                <td>@i</td>
+                                <td>@r.RoomNumber</td>
+                                <td>@r.Type</td>
+                                <td>@r.Price.ToString("0.00") €</td>
+                                <td class="text-end">
+                                    <a asp-action="DeleteRoom"
+                                       asp-route-id="@r.RoomId"
+                                       class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('Are you sure you want to delete this room??');">
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

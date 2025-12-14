@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Booking.com.Models.Entities.Reservation>
+
+@{
+    ViewData["Title"] = "My Bookings";
+}
+
+<div class="container py-5">
+
+    <h2 class="fw-bold mb-4">My Bookings</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            You didn't book a room yet.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Room</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var r in Model)
+                    {
+                        <tr>
+                            <td>
+                                @r.Room?.RoomNumber - @r.Room?.Type
+                            </td>
+                            <td>@r.StartDate.ToShortDateString()</td>
+                            <td>@r.EndDate.ToShortDateString()</td>
+                            <td>
+                                @if (r.IsConfirmed)
+                                {
+                                    <span class="badge bg-success">Confirmed</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">Pending Confirmation</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+</div>

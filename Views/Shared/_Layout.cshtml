@@ -3,56 +3,57 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] HotelReservationApp</title>
-    <script type="importmap"></script>
+    <title>@ViewData["Title"] - Booking.com</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/_Layout.css" asp-append-version="true" />
-
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                    HotelReservationApp
-                </a>
 
-                @if (!User.Identity.IsAuthenticated)
-                {
-                    <a asp-controller="Account" asp-action="Login">Login</a>
-                    <a asp-controller="Account" asp-action="Signup">Signup</a>
-                }
-                else
-                {
-                    @if (User.IsInRole("Admin"))
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- HEADER -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+            <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">Booking.com</a>
+            <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">Home</a>
+
+            <div class="collapse navbar-collapse justify-content-end">
+                <ul class="navbar-nav gap-3">
+                    @if (!User.Identity.IsAuthenticated)
                     {
-                        <a asp-controller="Admin" asp-action="Index">Area Admin</a>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Room" asp-action="Index">Rooms</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Login">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Register">Register</a></li>
+                    }
+                    else if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item"><a class="nav-link" asp-controller="Room" asp-action="Index">Rooms</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="Index">Admin</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Logout">Logout</a></li>
                     }
                     else
                     {
-                        <a asp-controller="Prenotazioni" asp-action="Index">Le mie prenotazioni</a>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Room" asp-action="Index">Rooms</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Profile" asp-action="Index">Profile</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Reservation" asp-action="MyReservations">Reservations</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Logout">Logout</a></li>
                     }
-
-                    <a asp-controller="Account" asp-action="Logout">Logout</a>
-                }
+                </ul>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 HotelReservationApp <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+    <!-- 🔑 CONTENT (PRENDE LO SPAZIO RIMANENTE) -->
+    <main class="flex-grow-1">
+        @RenderBody()
+    </main>
+
+    <!-- FOOTER SEMPRE VISIBILE -->
+    <footer class="bg-light border-top text-center py-3">
+        © 2025 - Booking.com -
+        <a asp-controller="Home" asp-action="Index">Home</a>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
